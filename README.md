@@ -1,55 +1,25 @@
-# PRIMA – Predicting Release Impact in Mobile Applications
+# PRIMA: Forecasting Mobile App Release Impact with Metadata
 
-A Python-based tool for analyzing and predicting the impact of software releases on mobile applications.
+A forecasting framework built on the [DATAR dataset](https://zenodo.org/records/10579421) to predict release success using **pre-release metadata** and XGBoost models, with proper temporal validation.
 
-## Overview
+---
 
-PRIMA (Predicting Release Impact in Mobile Applications) is designed to help development teams understand and predict the potential impact of software releases on mobile applications. This tool analyzes various metrics and patterns to provide insights into release risks and potential issues.
-
-## Dataset
-
-This project uses the DATAR (Dataset for Tracking App Releases) dataset:
-
-@inproceedings{abedini-msr2024-DATAR,
-  title={DATAR: A Dataset for Tracking App Releases},
-  booktitle={Proceedings of the 21st IEEE/ACM International Conference on Mining Software Repositories (MSR)},
-  author={Yasaman Abedini and Mohammad Hadi Hajihosseini and Abbas Heydarnoori},
-  month={April},
-  year={2024},
-  publisher={IEEE/ACM},
-  address={Lisbon, Portugal},
-}
-
-## Installation
-
-### Prerequisites
-
-- Python 3.9 or higher
-- pip (Python package installer)
-
-### Setup
-
-1. Clone the repository:
+### 1. Installation
 ```bash
-git clone https://github.com/yourusername/release-impact-analysis.git
-cd release-impact-analysis
-```
-
-2. Create a virtual environment (recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
+cd prima
 pip install -r requirements.txt
 ```
 
-## Usage
+### 2. Data Setup
+Place the DATAR dataset **unizpped** in `data/input/DATAR/release_related/all_jsons/`
 
-...
+### 3. Run Full Pipeline
+run step by step:
+```bash
+python data_preprocessing/01_filter_data.py      # Filter releases with reviews --> takes a bit long!
+python data_preprocessing/02_extract_features.py # Extract all features
+python data_preprocessing/03_build_datasets.py   # Create datasets with temporal splits
+python data_preprocessing/04_data_quality.py   # Evaluate datasets quality before model training 
+```
 
-## License
-
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+---
