@@ -1,0 +1,38 @@
+{
+  "filtering_results": {
+    "apps_before_filtering": 1321,
+    "apps_after_filtering": 357,
+    "retention_rate": 0.2702498107494323,
+    "releases_before_filtering": 8041,
+    "releases_after_filtering": 5388,
+    "releases_retention_rate": 0.6700659121999751
+  },
+  "app_statistics": {
+    "total_apps": 357,
+    "releases_per_app": {
+      "mean": 15.092436974789916,
+      "median": 13.0,
+      "min": 5,
+      "max": 37,
+      "std": 8.38838643063374
+    }
+  },
+  "release_statistics": {
+    "total_releases": 5388,
+    "releases_with_reviews": 3914,
+    "reviews_per_release": {
+      "mean": 13.16369710467706,
+      "median": 2.0,
+      "min": 0,
+      "max": 100,
+      "std": 25.730650702738775
+    }
+  },
+  "temporal_coverage": {
+    "date_range": [
+      "2014-05-04 21:14:40+00:00",
+      "2023-11-29 22:18:25+00:00"
+    ],
+    "total_days": 3496
+  }
+}
