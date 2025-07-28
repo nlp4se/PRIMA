@@ -182,6 +182,7 @@ class FeatureExtractor:
             features['release_id'] = release['release_id']
             features['date'] = release['date']
             features['review_count'] = release['review_count']
+            features['average_rating'] = release.get('average_rating', np.nan)
 
         except Exception as e:
             logger.error(f"Error extracting features for {release['app_id']}/{release['release_id']}: {e}")
@@ -195,7 +196,8 @@ class FeatureExtractor:
                 'app_id': release['app_id'],
                 'release_id': release['release_id'],
                 'date': release['date'],
-                'review_count': release['review_count']
+                'review_count': release['review_count'],
+                'average_rating': release.get('average_rating', np.nan)
             }
 
         return features
