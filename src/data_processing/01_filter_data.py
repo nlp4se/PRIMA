@@ -129,6 +129,7 @@ class ReleaseFilter:
                 continue
 
             review_count = self.count_reviews(release)
+            average_rating = release.get('average_rating', None)
 
             release_data = release.get('release_data', release)
 
@@ -138,6 +139,7 @@ class ReleaseFilter:
                 'name': release_data.get('name', release_data.get('tag_name', '')),
                 'date': release_date,
                 'review_count': review_count,
+                'average_rating': average_rating,
                 'raw_data': release
             }
 
