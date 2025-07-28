@@ -4,6 +4,8 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 from collections import defaultdict, Counter
+
+import numpy as np
 import pandas as pd
 
 from src.utils.utils import get_app_id_from_filename
@@ -129,7 +131,15 @@ class ReleaseFilter:
                 continue
 
             review_count = self.count_reviews(release)
-            average_rating = release.get('average_rating', None)
+
+            scores = []
+            for source in ['reviews', 'google_play_reviews']:
+                for r in release.get(source, []):
+                    score = r.get('score')
+                    if isinstance(score, (int, float)):
+                        scores.append(score)
+
+            average_rating = float(np.mean(scores)) if scores else None
 
             release_data = release.get('release_data', release)
 
