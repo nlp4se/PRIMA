@@ -1,8 +1,8 @@
 {
-  "extraction_timestamp": "2025-07-25T10:14:26.559740",
+  "extraction_timestamp": "2025-07-28T09:26:50.388563",
   "total_releases": 5388,
   "total_apps": 357,
-  "feature_count": 42,
+  "feature_count": 43,
   "feature_names": [
     "release_name_length",
     "has_release_name",
@@ -49,7 +49,8 @@
     "app_id",
     "release_id",
     "date",
-    "review_count"
+    "review_count",
+    "average_rating"
   ],
   "extraction_stats": {
     "apps_processed": 357,
