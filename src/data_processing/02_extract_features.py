@@ -6,6 +6,7 @@ from typing import Dict, List, Optional, Any
 from collections import defaultdict
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 from src.utils.config import *
 
@@ -163,20 +164,56 @@ class FeatureExtractor:
         except (ValueError, TypeError):
             return 0.0
 
-    def extract_release_features(self, release: Dict) -> Dict[str, Any]:
+    def extract_temporal_features(self, release: Dict, previous_release: Optional[Dict] = None) -> Dict[str, Any]:
+        current_date = release.get("date")
+        prev_date = previous_release.get("date") if previous_release else None
+
+        # Ensure both are datetime objects
+        if isinstance(current_date, str):
+            try:
+                current_date = pd.to_datetime(current_date)
+            except Exception:
+                current_date = None
+
+        if isinstance(prev_date, str):
+            try:
+                prev_date = pd.to_datetime(prev_date)
+            except Exception:
+                prev_date = None
+
+        days_since_last = (current_date - prev_date).days if current_date and prev_date else None
+
+        return {
+            'days_since_last_release': days_since_last
+        }
+
+    def extract_linguistic_features(self, release: Dict) -> Dict[str, Any]:
+        release_data = release.get('raw_data', {}).get('release_data') or {}
+        body = release_data.get('body') or ""
+        words = body.split()
+        sentences = body.split('.') if body else []
+
+        features = {
+            'body_char_count': len(body),
+            'body_word_count': len(words),
+            'body_line_count': len(body.splitlines()),
+            'avg_word_length': np.mean([len(w) for w in words]) if words else 0.0,
+            'sentence_count': len([s for s in sentences if s.strip()]),
+            'has_numbers': int(any(char.isdigit() for char in body))
+        }
+        return features
+
+    def extract_release_features(self, release: Dict, previous_release: Optional[Dict] = None) -> Dict[str, Any]:
         features = {}
 
         try:
             features.update(self.extract_general_features(release))
             features.update(self.extract_apk_metrics(release))
-
-            issue_features = self.extract_issue_features(release)
-            pr_features = self.extract_pr_features(release)
-            contributor_features = self.extract_contributor_features(release)
-
-            features.update(issue_features)
-            features.update(pr_features)
-            features.update(contributor_features)
+            features.update(self.extract_issue_features(release))
+            features.update(self.extract_pr_features(release))
+            features.update(self.extract_contributor_features(release))
+            features.update(self.extract_linguistic_features(release))
+            features.update(self.extract_temporal_features(release, previous_release))
 
             features['app_id'] = release['app_id']
             features['release_id'] = release['release_id']
@@ -207,11 +244,12 @@ class FeatureExtractor:
             with open(app_file, 'r', encoding='utf-8') as f:
                 app_data = json.load(f)
 
-            releases = app_data['releases']
+            releases = sorted(app_data['releases'], key=lambda r: r['date'])  # Ensure order
             app_features = []
 
-            for release in releases:
-                features = self.extract_release_features(release)
+            for i, release in enumerate(releases):
+                prev_release = releases[i - 1] if i > 0 else None
+                features = self.extract_release_features(release, prev_release)
                 app_features.append(features)
                 self.extraction_stats['releases_processed'] += 1
 
