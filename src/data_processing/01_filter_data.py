@@ -182,7 +182,7 @@ class ReleaseFilter:
                 logger.debug(f"App {app_id}: insufficient releases ({len(releases)} < {MIN_RELEASES_PER_APP})")
                 continue
 
-            releases_with_reviews = sum(1 for r in releases if r['review_count'] > 0)
+            releases_with_reviews = sum(1 for r in releases if r['review_count'] >= 10)
             if releases_with_reviews < MIN_RELEASES_WITH_REVIEWS:
                 logger.debug(
                     f"App {app_id}: insufficient releases with reviews ({releases_with_reviews} < {MIN_RELEASES_WITH_REVIEWS})")
