@@ -1,31 +1,31 @@
 {
   "filtering_results": {
     "apps_before_filtering": 1321,
-    "apps_after_filtering": 357,
-    "retention_rate": 0.2702498107494323,
+    "apps_after_filtering": 131,
+    "retention_rate": 0.0991672975018925,
     "releases_before_filtering": 8041,
-    "releases_after_filtering": 5388,
-    "releases_retention_rate": 0.6700659121999751
+    "releases_after_filtering": 2302,
+    "releases_retention_rate": 0.2862828006466857
   },
   "app_statistics": {
-    "total_apps": 357,
+    "total_apps": 131,
     "releases_per_app": {
-      "mean": 15.092436974789916,
-      "median": 13.0,
+      "mean": 17.572519083969464,
+      "median": 18.0,
       "min": 5,
       "max": 37,
-      "std": 8.38838643063374
+      "std": 9.145852809082498
     }
   },
   "release_statistics": {
-    "total_releases": 5388,
-    "releases_with_reviews": 3914,
+    "total_releases": 2302,
+    "releases_with_reviews": 2129,
     "reviews_per_release": {
-      "mean": 13.16369710467706,
-      "median": 2.0,
+      "mean": 27.772806255430062,
+      "median": 11.0,
       "min": 0,
       "max": 100,
-      "std": 25.730650702738775
+      "std": 33.7023049934836
     }
   },
   "temporal_coverage": {
