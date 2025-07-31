@@ -1,0 +1,11 @@
+feature,score
+num_broadcast_receivers,0.0699025682125698
+apk_dex_size,0.0677286285671741
+num_activities,0.06574154950691202
+apk_arsc_size,0.0652123134576863
+apk_file_size,0.06355367468280537
+min_sdk_version,0.05491461878572679
+num_permissions,0.050598404984799394
+total_components,0.04719065666228328
+issue_avg_comments_closed,0.03384721670011892
+num_services,0.031513498387776284

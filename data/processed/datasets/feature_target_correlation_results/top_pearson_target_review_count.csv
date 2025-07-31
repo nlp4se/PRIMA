@@ -1,0 +1,11 @@
+feature,score
+num_broadcast_receivers,0.15174192339591813
+total_components,0.0997226715765425
+release_name_length,-0.08251145605170837
+num_activities,0.08207482434166544
+pr_merge_rate,0.07526768306315572
+issue_created_count,0.072036071281747
+issue_closed_count,0.0717133750760606
+avg_word_length,-0.07047561884260684
+num_services,0.06805222847555627
+contributor_count,0.05395239036725203
