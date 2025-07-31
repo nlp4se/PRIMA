@@ -39,6 +39,20 @@ def main():
     if has_rating:
         df_model['target_average_rating'] = df_model['target_average_rating'].astype(float)
 
+    if has_rating:
+        df_model['target_rating_bucket'] = pd.cut(
+            df_model['target_average_rating'],
+            bins=[0, 1, 2, 3, 4, 5],
+            labels=["0–1", "1–2", "2–3", "3–4", "4–5"],
+            right=False
+        )
+
+    df_model['target_review_bucket'] = pd.qcut(
+        df_model['target_review_count'],
+        q=4,
+        labels=["low", "medium", "high", "very high"]
+    )
+
     train_list = []
     test_list = []
 
@@ -67,6 +81,7 @@ def main():
     print("\nBuild datasets complete with per-app split")
     print(f"  Train rows: {len(train_df)} -> {train_file}")
     print(f"  Test  rows: {len(test_df)} -> {test_file}")
+
 
 if __name__ == '__main__':
     main()
