@@ -1,4 +1,3 @@
-````markdown
 # PRIMA: Forecasting Mobile App Release Impact with Metadata
 
 A forecasting framework built on the [DATAR dataset](https://zenodo.org/records/10579421) to predict release success using **pre-release metadata** and XGBoost models, with proper temporal validation.
