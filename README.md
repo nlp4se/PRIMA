@@ -1,7 +1,3 @@
-Here is the updated `README.md` with your **RQ1 and findings** integrated into the appropriate section of the documentation:
-
----
-
 ````markdown
 # PRIMA: Forecasting Mobile App Release Impact with Metadata
 
