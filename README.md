@@ -35,6 +35,8 @@ This folder should contain all raw `.json` files for mobile app releases.
 
 The pipeline consists of five modular stages, each producing outputs required for forecasting. These steps include data cleaning, feature extraction, dataset creation, and analysis of feature relevance.
 
+![data_pipeline.png](data/readme_images/data_pipeline.png)
+
 #### Step 1: `01_filter_data.py` — Release Filtering
 
 * Loads raw JSON files and parses release data.
