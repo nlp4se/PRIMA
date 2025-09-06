@@ -1,6 +1,16 @@
+````markdown
 # PRIMA: Forecasting Mobile App Release Impact with Metadata
 
 PRIMA is a forecasting framework built on the [DATAR dataset](https://zenodo.org/records/10579421) to predict mobile app release outcomes using pre-release metadata. It supports forecasting user engagement (review count) and satisfaction (rating) via feature metadata analysis and temporal machine learning models.
+
+#### Research objective
+
+PRIMA’s contribution is not about beating baselines or making perfect predictions, which are very hard to define and beat in this problem setting.
+Instead, the project wants to:
+    1) **Show why forecasting is difficult** when relying on pre-release metadata, due to the volatility of review counts and the small range of ratings.
+    2) **Highlight which features are most useful**, via correlation analysis and feature importance analysis.
+    3) **Show that review counts are volatile**, and suggest to reframe the review count prediction as classification (e.g., low/medium/high ranges) or ranking, rather than pure regression.
+    4) **Define PRIMA as the first full framework** for app release forecasting on the DATAR dataset, providing a reproducible framework and good baselines for future research.
 
 ---
 
@@ -9,7 +19,7 @@ PRIMA is a forecasting framework built on the [DATAR dataset](https://zenodo.org
 ```bash
 cd prima
 pip install -r requirements.txt
-```
+````
 
 ---
 
@@ -35,7 +45,7 @@ This folder should contain all raw `.json` files for mobile app releases.
 
 The pipeline consists of five modular stages, each producing outputs required for forecasting. These steps include data cleaning, feature extraction, dataset creation, and analysis of feature relevance.
 
-![data_pipeline.png](data/readme_images/data_pipeline.png)
+![data\_pipeline.png](data/readme_images/data_pipeline.png)
 
 #### Step 1: `01_filter_data.py` — Release Filtering
 
@@ -90,9 +100,9 @@ The pipeline consists of five modular stages, each producing outputs required fo
 
 ---
 
-### 4. Running the Full Pipeline
+### 4. Running the Full Data Generation Pipeline
 
-You can execute all steps individually or via a wrapper script.
+You can execute all steps individually or via the orchestrator
 
 **Step-by-step:**
 
@@ -110,6 +120,42 @@ python data_processing/05_feature_target_correlation.py
 python data_processing/run_full_pipeline.py
 ```
 
-### 5. Forecasting (in development)
+---
 
-Model training and evaluation (e.g., using XGBoost and Random Forest) in progress
+### 5. Forecasting Pipeline
+
+#### Step 6: `06_train_models.py` — Model Training
+
+* Trains forecasting models on the training dataset.
+* Models implemented:
+
+  * **Random Forest Regressor**
+  * **XGBoost** (square error, Poisson, log1p-transformed)
+  * **Huber Regressor** (for ratings, with scaling pipeline)
+* Performs hyperparameter selection for XGBoost via cross-validation.
+* Saves:
+  * Trained models (`.joblib`)
+  * Metadata (`meta_<target>.json`) including feature list, clip bounds, and CV details.
+
+#### Step 7: `07_forecast_and_evaluate.py` — Forecasting & Evaluation
+
+* Loads models from Step 6.
+* Predicts on the test dataset only (strict temporal split).
+* Computes strong **naive baselines** for comparison:
+
+  * Last value baseline
+  * Moving average (MA3)
+  * Seasonal naive (optional)
+* Evaluation metrics:
+
+  * Counts: MAE, RMSE, RMSLE, sMAPE, MAPE
+  * Ratings: MAE, RMSE, MdAE, R², Spearman correlation
+* Outputs:
+
+  * Per-model prediction CSVs
+  * Metrics JSON files
+  * Plots (predicted vs actual, residuals)
+  * Worst-K error cases
+  * Run manifest with all artifacts and metadata
+
+---
